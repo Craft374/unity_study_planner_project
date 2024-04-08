@@ -12,30 +12,75 @@ public class main : MonoBehaviour
 {
     public string date;
     public string day;
+    public int todaynumber;
+    public int dayvalue;
+
     public TMP_Text todayTMP;
     public TMP_Text yoilTMP;
+    public Button LB;
+    public Button RB;
+    public DateTime today;
 
     void Start()
     {
-        GameObject todaytext = GameObject.Find("todaytext");
-        todayTMP = todaytext.GetComponent<TMP_Text>();
+        GameObject todaytext_obj = GameObject.Find("todaytext");
+        todayTMP = todaytext_obj.GetComponent<TMP_Text>();
+        GameObject yoil_obj = GameObject.Find("yoil_t");
+        yoilTMP = yoil_obj.GetComponent<TMP_Text>();
+        GameObject leftbutton_obj = GameObject.Find("LB");
+        LB = leftbutton_obj.GetComponent<Button>();
+        GameObject rightbutton_obj = GameObject.Find("RB");
+        RB = rightbutton_obj.GetComponent<Button>();
 
-        GameObject yoil = GameObject.Find("yoil_t");
-        yoilTMP = yoil.GetComponent<TMP_Text>();
-
-        DateTime today = DateTime.Today;
+        today = DateTime.Today;
         date = today.ToString("yyyy-MM-dd");
         day = today.ToString("dddd");
         Debug.Log(date);
         Debug.Log(day);
         todayTMP.text = date;
         yoilTMP.text = day;
-
-        int dayOfWeekNumber = (int)today.DayOfWeek;
-        Debug.Log("요일 숫자: " + dayOfWeekNumber);
+        dayvalue = 0;
+        
+        todaynumber = (int)today.DayOfWeek;
+        Debug.Log("요일 숫자: " + todaynumber);
+        LB.onClick.AddListener(LB_click);
+        RB.onClick.AddListener(RB_click);
     }
 
-    // Update is called once per frame
+    public void LB_click()
+    {
+        //Debug.Log("LB");
+        dayvalue -= 1;
+        todaynumber -= 1; //어제를 숫자로 표시
+        if (todaynumber == -1)
+        {
+            todaynumber = 6;
+        }
+        //Debug.Log(today.DayOfWeek); 영어로 요일뜸
+        string dayName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)todaynumber);
+        Debug.Log(dayName);
+        yoilTMP.text = dayName;
+        today = DateTime.Today.AddDays(dayvalue);
+        Debug.Log(today.ToString("yyyy-MM-dd"));
+        todayTMP.text = today.ToString("yyyy-MM-dd");
+    }
+    public void RB_click()
+    {
+        //Debug.Log("RB");
+        dayvalue += 1;    
+        todaynumber += 1; //내일 숫자로 표시
+        if (todaynumber == 7)
+        {
+            todaynumber = 0;
+        }
+        string dayName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)todaynumber);
+        Debug.Log(dayName);
+        yoilTMP.text = dayName;
+        today = DateTime.Today.AddDays(dayvalue);
+        Debug.Log(today.ToString("yyyy-MM-dd"));
+        todayTMP.text = today.ToString("yyyy-MM-dd");
+    }
+
     void FixedUpdate()
     {
         
