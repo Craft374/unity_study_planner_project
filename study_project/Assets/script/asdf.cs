@@ -10,36 +10,46 @@ using TMPro;
 
 public class asdf : MonoBehaviour
 {
-    public GameObject basePrefab;
-    public Button mainButton;
-    public GameObject aButtonPrefab;
-    public GameObject bImagePrefab;
-    private int count = 0;
+    private Button hideButton;
+    private Image targetImage;
 
     void Start()
     {
-        mainButton.onClick.AddListener(OnMainButtonClicked);
+        // HideButton 컴포넌트를 가져옵니다.
+        hideButton = GetComponent<Button>();
+
+        // 부모 오브젝트(Base) 내에서 이름이 'a'인 자식 오브젝트를 찾고, 
+        // 그 Image 컴포넌트를 설정합니다.
+        targetImage = FindTargetImage(transform.parent);
+
+        // 버튼 클릭 이벤트에 메소드 등록
+        if (hideButton != null)
+        {
+            hideButton.onClick.AddListener(OnHideButtonClick);
+        }
     }
 
-    void OnMainButtonClicked()
+    // 부모 오브젝트 내에서 이름이 'a'인 Image 컴포넌트를 찾는 메소드
+    private Image FindTargetImage(Transform parent)
     {
-        count++;
-        GameObject newBase = Instantiate(basePrefab, new Vector3(0, count * 2, 0), Quaternion.identity);
-        newBase.name = "base" + count;
-
-        // A 버튼 생성
-        GameObject newAButton = Instantiate(aButtonPrefab, newBase.transform);
-        newAButton.name = "A" + count + "Button";
-        newAButton.GetComponent<Button>().onClick.AddListener(() => OnAButtonClicked(newBase.transform));
-
-        // B 이미지 생성
-        GameObject newBImage = Instantiate(bImagePrefab, newBase.transform);
-        newBImage.name = "B" + count + "Image";
+        foreach (Transform child in parent)
+        {
+            if (child.name == "a")
+            {
+                return child.GetComponent<Image>();
+            }
+        }
+        return null;
     }
 
-    public void OnAButtonClicked(Transform baseTransform)
+    void OnHideButtonClick()
     {
-        GameObject bImage = baseTransform.Find("B" + baseTransform.name.Substring(4) + "Image").gameObject;
-        bImage.SetActive(false);
+        Debug.Log("ojoiqwd");
+        if (targetImage != null)
+        {
+            // 이미지 색을 변경합니다. (예: 투명하게 만들기)
+            targetImage.color = new Color(0, 0, 0, 0); // 투명하게 설정
+        }
     }
 }
+
