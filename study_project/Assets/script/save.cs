@@ -13,18 +13,25 @@ public class save : MonoBehaviour
     public Button LB;
     public Button RB;
     public string fullPath;
+    public string path;
     public main mainScript;
-    public onoff onoffScript;
+    public string p_name;
+    public string memo;
+    private GameObject nameObj;
+    private GameObject memoObj;
 
     void Start()
     {
+        nameObj = GameObject.Find("A");
+        memoObj = GameObject.Find("B");
+        
+        p_name = nameObj.name.ToString();
+        memo = memoObj.name.ToString();
+
+        Debug.Log($"{p_name} {memo}");
         mainScript = GetComponent<main>(); 
-        onoffScript = GetComponent<onoff>();
-        // fullPath = Application.persistentDataPath;
-        Debug.Log(onoffScript.memo.ToString());
-        Debug.Log(onoffScript.p_name.ToString());
-
-
+        
+        // fullPath = Application.persistentDataPath;   
         fullPath = Application.dataPath + "/StreamingAssets";
         GameObject leftbutton_obj = GameObject.Find("LB");
         LB = leftbutton_obj.GetComponent<Button>();
@@ -34,7 +41,7 @@ public class save : MonoBehaviour
         LB.onClick.AddListener(LB_click);
         RB.onClick.AddListener(RB_click);
 
-        string path = fullPath + "/" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+        path = fullPath + "/" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
         
         try
         {
@@ -63,12 +70,20 @@ public class save : MonoBehaviour
     }
 
 
-    // void Update()
-    // {
-        // string path = fullPath + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-        // main mainScript = GetComponent<main>();
-    //     // Debug.Log(mainScript.today.ToString("yyyy-MM-dd"));
-    // }
+    void Update()
+    {
+        if (p_name != nameObj.name.ToString())
+        {
+            Debug.Log("숫자 바뀜");
+            nameObj.name = p_name.ToString();
+        }
+        if (memo != memoObj.name.ToString())
+        {
+            Debug.Log("문자 바뀜");
+            memoObj.name = memo.ToString();
+        }
+    }
+
     public void LB_click()
     {
         Debug.Log("왼 됨");

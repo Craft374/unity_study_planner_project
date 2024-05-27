@@ -15,11 +15,19 @@ public class onoff : MonoBehaviour
     public TMP_InputField inputField;
     public string p_name;
     public string memo;
+    private GameObject nameObj;
+    private GameObject memoObj;
+    public TMP_Text qwe;
 
     public void Start()
     {
         p_name = "";
         memo = "";
+        nameObj = GameObject.Find("A");
+        memoObj = GameObject.Find("B");
+
+        GameObject qwe_obj = GameObject.Find("qwe");
+        qwe = qwe_obj.GetComponent<TMP_Text>();
 
         inputField = FindTargetInputField(transform.parent);
         btn = GetComponent<Button>();
@@ -54,6 +62,10 @@ public class onoff : MonoBehaviour
             p_name = transform.parent.name.ToString();
             memo = value.ToString();
             Debug.Log(p_name + " " + memo);
+
+            nameObj.name = p_name;
+            memoObj.name = memo;
+            qwe.text = memo;
         }
     }
 
@@ -61,5 +73,6 @@ public class onoff : MonoBehaviour
     {
         Debug.Log("입력중ㅋ");
         inputField.ActivateInputField();
+        inputField.text = memoObj.name;
     }
 }

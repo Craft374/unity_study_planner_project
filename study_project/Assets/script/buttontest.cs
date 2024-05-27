@@ -8,7 +8,6 @@ using UnityEngine.Events;
 using UnityEngine.Android;
 using TMPro;
 
-
 public class buttontest : MonoBehaviour
 {
     public GameObject originalImage;
@@ -30,19 +29,21 @@ public class buttontest : MonoBehaviour
         Debug.Log("메모 추가");
         originalImage = GameObject.Find("base");
         GameObject content = GameObject.Find("Content");
-        
-        // 오브젝트 복제
-        GameObject clonedImage = Instantiate(originalImage);
-        
-        // 복제된 오브젝트 이름 설정
-        clonedImage.name = (cloneIndex + 1).ToString();
 
-        cloneIndex++;
+        for (int i = 0; i < 1/*이 앞에 숫자가 몇번 생성 되는지 보는거임*/; i++)
+        {
+            // 오브젝트 복제
+            GameObject clonedImage = Instantiate(originalImage);
 
-        // 복제된 이미지를 Content의 자식으로 만듭니다.
-        clonedImage.transform.SetParent(content.transform, false);
+            // 복제된 오브젝트 이름 설정
+            clonedImage.name = (cloneIndex + 1).ToString();
+            cloneIndex++;
 
-        // 원래 오브젝트 다음에 배치
-        clonedImage.transform.SetSiblingIndex(originalImage.transform.GetSiblingIndex() + 1);
+            // 복제된 이미지를 Content의 자식으로 만듭니다.
+            clonedImage.transform.SetParent(content.transform, false);
+
+            // 원래 오브젝트 다음에 배치
+            clonedImage.transform.SetSiblingIndex(originalImage.transform.GetSiblingIndex() + 1);
+        }
     }
 }
