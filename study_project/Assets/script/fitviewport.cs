@@ -29,19 +29,19 @@ public class FitViewport : MonoBehaviour
             // 화면 크기
             float currentScreenWidth = Screen.width;
             float currentScreenHeight = Screen.height;
-            Debug.Log($"{currentScreenWidth} x {currentScreenHeight}");
+            // Debug.Log($"{currentScreenWidth} x {currentScreenHeight}");
 
             //n계산
             float n = 9f * currentScreenHeight / currentScreenWidth;
-            Debug.Log($"9*현y/현x = {n}");
+            // Debug.Log($"9*현y/현x = {n}");
 
             // bottom 값
             float bo = 960f - 60f * n;
-            Debug.Log($"960 - 60n = {bo}");
+            // Debug.Log($"960 - 60n = {bo}");
 
             // PosY랑 Top
             float upPosY = 60f * n - 960f;
-            Debug.Log($"60n - 960 = {upPosY}");
+            // Debug.Log($"60n - 960 = {upPosY}");
 
             // Viewport 크기 설정
             viewport.sizeDelta = new Vector2(currentScreenWidth, currentScreenHeight);

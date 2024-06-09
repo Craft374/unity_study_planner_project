@@ -39,7 +39,7 @@ public class onoff : MonoBehaviour
         {
             inputField.onEndEdit.AddListener(OnEndEdit);
         }
-        Debug.Log("실행중");
+        // Debug.Log("실행중");
     }
 
     private TMP_InputField FindTargetInputField(Transform parent)
@@ -76,3 +76,4 @@ public class onoff : MonoBehaviour
         inputField.text = memoObj.name;
     }
 }
+

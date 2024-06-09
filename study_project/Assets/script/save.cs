@@ -19,16 +19,18 @@ public class save : MonoBehaviour
     public string memo;
     private GameObject nameObj;
     private GameObject memoObj;
-
+    public int Line =0;
     void Start()
-    {
+    {   
+        Line = 0;
+
         nameObj = GameObject.Find("A");
         memoObj = GameObject.Find("B");
         
         p_name = nameObj.name.ToString();
         memo = memoObj.name.ToString();
 
-        Debug.Log($"{p_name} {memo}");
+        // Debug.Log($"{p_name} {memo}");
         mainScript = GetComponent<main>(); 
         
         // fullPath = Application.persistentDataPath;   
@@ -42,7 +44,12 @@ public class save : MonoBehaviour
         RB.onClick.AddListener(RB_click);
 
         path = fullPath + "/" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+        maketxt();
+
         
+    }
+    public void maketxt()
+    {
         try
         {
             // 파일이 이미 존재하는지 확인
@@ -51,97 +58,56 @@ public class save : MonoBehaviour
                 // 파일이 없으면 새로운 파일을 생성하고 내용을 작성
                 using (StreamWriter writer = File.CreateText(path))
                 {
-                    writer.WriteLine("Hello, World!");
-                    writer.WriteLine("This is a test file.");
+                    // writer.WriteLine("None");
                 }
 
                 Debug.Log(path +" 파일이 생성되었습니다.");
             }
             else
             {
-                Debug.Log(path +" 파일이 이미 존재합니다.");
+                // 파일이 존재하면 내용을 읽어와서 줄 수와 내용을 출력
+                string[] lines = File.ReadAllLines(path);
+                // Debug.Log(path + " 파일이 이미 존재합니다. 파일 내용:");
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    Line = i+1;
+                    Debug.Log($"파일이 이미 존재합니다. 줄:{Line}");
+                    // Debug.Log("Line " + (i + 1) + ": " + lines[i]);
+                }
             }
         }
-
         catch (System.Exception ex)
         {
             Debug.LogError("파일을 생성하는 도중 오류가 발생했습니다: " + ex.Message);
         }
     }
 
-
     void Update()
     {
         if (p_name != nameObj.name.ToString())
         {
-            Debug.Log("숫자 바뀜");
+            Debug.Log($"숫자 바뀜 {nameObj.name}");
             nameObj.name = p_name.ToString();
         }
         if (memo != memoObj.name.ToString())
         {
-            Debug.Log("문자 바뀜");
+            Debug.Log($"문자 바뀜 {memoObj.name}");
             memoObj.name = memo.ToString();
         }
     }
 
     public void LB_click()
     {
-        Debug.Log("왼 됨");
-        string path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
+        // Debug.Log("왼 됨");
+        path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
 
-        try
-        {
-            // 파일이 이미 존재하는지 확인
-            if (!File.Exists(path))
-            {
-                // 파일이 없으면 새로운 파일을 생성하고 내용을 작성
-                using (StreamWriter writer = File.CreateText(path))
-                {
-                    writer.WriteLine("Hello, World!");
-                    writer.WriteLine("This is a test file.");
-                }
-
-                Debug.Log(path +" 파일이 생성되었습니다.");
-            }
-            else
-            {
-                Debug.Log(path +" 파일이 이미 존재합니다.");
-            }
-        }
-
-        catch (System.Exception ex)
-        {
-            Debug.LogError("파일을 생성하는 도중 오류가 발생했습니다: " + ex.Message);
-        }
+        maketxt();
     }
     public void RB_click()
     {
-        Debug.Log("오른 됨");
-        string path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
+        // Debug.Log("오른 됨");
+        path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
 
-        try
-        {
-            // 파일이 이미 존재하는지 확인
-            if (!File.Exists(path))
-            {
-                // 파일이 없으면 새로운 파일을 생성하고 내용을 작성
-                using (StreamWriter writer = File.CreateText(path))
-                {
-                    writer.WriteLine("Hello, World!");
-                    writer.WriteLine("This is a test file.");
-                }
-
-                Debug.Log(path +" 파일이 생성되었습니다.");
-            }
-            else
-            {
-                Debug.Log(path +" 파일이 이미 존재합니다.");
-            }
-        }
-
-        catch (System.Exception ex)
-        {
-            Debug.LogError("파일을 생성하는 도중 오류가 발생했습니다: " + ex.Message);
-        }
+        maketxt();
     }
 }

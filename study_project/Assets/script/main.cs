@@ -35,14 +35,14 @@ public class main : MonoBehaviour
         today = DateTime.Today;
         date = today.ToString("yyyy-MM-dd");
         day = today.ToString("dddd");
-        Debug.Log(date);
-        Debug.Log(day);
+        // Debug.Log(date);
+        // Debug.Log(day);
         todayTMP.text = date;
         yoilTMP.text = day;
         dayvalue = 0;
         
         todaynumber = (int)today.DayOfWeek;
-        Debug.Log("요일 숫자: " + todaynumber);
+        // Debug.Log("요일 숫자: " + todaynumber);
         LB.onClick.AddListener(LB_click);
         RB.onClick.AddListener(RB_click);
     }
@@ -58,10 +58,10 @@ public class main : MonoBehaviour
         }
         //Debug.Log(today.DayOfWeek); 영어로 요일뜸
         string dayName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)todaynumber);
-        Debug.Log(dayName);
+        // Debug.Log(dayName);
         yoilTMP.text = dayName;
         today = DateTime.Today.AddDays(dayvalue);
-        Debug.Log(today.ToString("yyyy-MM-dd"));
+        // Debug.Log(today.ToString("yyyy-MM-dd"));
         todayTMP.text = today.ToString("yyyy-MM-dd");
     }
     public void RB_click()
@@ -74,10 +74,10 @@ public class main : MonoBehaviour
             todaynumber = 0;
         }
         string dayName = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetDayName((DayOfWeek)todaynumber);
-        Debug.Log(dayName);
+        // Debug.Log(dayName);
         yoilTMP.text = dayName;
         today = DateTime.Today.AddDays(dayvalue);
-        Debug.Log(today.ToString("yyyy-MM-dd"));
+        // Debug.Log(today.ToString("yyyy-MM-dd"));
         todayTMP.text = today.ToString("yyyy-MM-dd");
     }
 
