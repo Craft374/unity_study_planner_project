@@ -1,15 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using UnityEngine.Events;
-using UnityEngine.Android;
-using TMPro;
 
 public class save : MonoBehaviour
-{    
+{
     public Button LB;
     public Button RB;
     public string fullPath;
@@ -19,21 +15,20 @@ public class save : MonoBehaviour
     public string memo;
     private GameObject nameObj;
     private GameObject memoObj;
-    public int Line =0;
+    public int Line = 0;
+
     void Start()
-    {   
+    {
         Line = 0;
 
         nameObj = GameObject.Find("A");
         memoObj = GameObject.Find("B");
-        
+
         p_name = nameObj.name.ToString();
         memo = memoObj.name.ToString();
 
-        // Debug.Log($"{p_name} {memo}");
-        mainScript = GetComponent<main>(); 
-        
-        // fullPath = Application.persistentDataPath;   
+        mainScript = GetComponent<main>();
+
         fullPath = Application.dataPath + "/StreamingAssets";
         GameObject leftbutton_obj = GameObject.Find("LB");
         LB = leftbutton_obj.GetComponent<Button>();
@@ -45,9 +40,8 @@ public class save : MonoBehaviour
 
         path = fullPath + "/" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
         maketxt();
-
-        
     }
+
     public void maketxt()
     {
         try
@@ -55,25 +49,19 @@ public class save : MonoBehaviour
             // 파일이 이미 존재하는지 확인
             if (!File.Exists(path))
             {
-                // 파일이 없으면 새로운 파일을 생성하고 내용을 작성
+                // 파일이 없으면 새로운 파일을 생성
                 using (StreamWriter writer = File.CreateText(path))
                 {
-                    // writer.WriteLine("None");
+                    // 초기 내용은 빈 파일로 생성
                 }
-
-                Debug.Log(path +" 파일이 생성되었습니다.");
+                Debug.Log(path + " 파일이 생성되었습니다.");
             }
             else
             {
                 // 파일이 존재하면 내용을 읽어와서 줄 수와 내용을 출력
                 string[] lines = File.ReadAllLines(path);
-                // Debug.Log(path + " 파일이 이미 존재합니다. 파일 내용:");
-                for (int i = 0; i < lines.Length; i++)
-                {
-                    Line = i+1;
-                    Debug.Log($"파일이 이미 존재합니다. 줄:{Line}");
-                    // Debug.Log("Line " + (i + 1) + ": " + lines[i]);
-                }
+                Line = lines.Length;
+                Debug.Log(path + " 파일이 이미 존재합니다. 줄 수: " + Line);
             }
         }
         catch (System.Exception ex)
@@ -98,16 +86,39 @@ public class save : MonoBehaviour
 
     public void LB_click()
     {
-        // Debug.Log("왼 됨");
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-
-        maketxt();
+        saveText(2, "LB");
+        maketxt(); // Update the line count after saving
     }
+
     public void RB_click()
     {
-        // Debug.Log("오른 됨");
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-
-        maketxt();
+        saveText(1, "RB");
+        maketxt(); // Update the line count after saving
     }
+
+    public void saveText(int lineNumber, string text)
+    {
+        if (!File.Exists(path))
+        {
+            Debug.LogError("File does not exist.");
+            return;
+        }
+
+        List<string> lines = new List<string>(File.ReadAllLines(path));
+
+        if (lineNumber < 1 || lineNumber > lines.Count)
+        {
+            Debug.LogError("Line number is out of range.");
+            return;
+        }
+
+        lines[lineNumber - 1] = text; // 입력받은 줄 번호에 텍스트를 대입 (-1을 해서 0 인덱싱 처리)
+
+        File.WriteAllLines(path, lines.ToArray());
+
+        Debug.Log("Line updated successfully.");
+    }
+
 }

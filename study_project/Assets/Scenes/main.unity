@@ -1392,6 +1392,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalImage: {fileID: 0}
   btn: {fileID: 0}
+  saveScript: {fileID: 0}
+  LB: {fileID: 0}
+  RB: {fileID: 0}
 --- !u!114 &519420035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,9 +1410,11 @@ MonoBehaviour:
   LB: {fileID: 0}
   RB: {fileID: 0}
   fullPath: 
+  path: 
   mainScript: {fileID: 0}
   p_name: 
   memo: 
+  Line: 0
 --- !u!114 &519420036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2578,8 +2583,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 682}
-  m_SizeDelta: {x: 612.489, y: 234.0336}
+  m_AnchoredPosition: {x: 7.3487988, y: 678}
+  m_SizeDelta: {x: 549.1865, y: 234.0336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1988406383
 MonoBehaviour:
@@ -2664,7 +2669,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -1.0377197, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

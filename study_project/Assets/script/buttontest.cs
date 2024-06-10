@@ -62,30 +62,30 @@ public class buttontest : MonoBehaviour
 
     public void LB_click()
     {
-        originalImage = GameObject.Find("base");
-        GameObject content = GameObject.Find("Content");
-        int n = 0;
-        while (n < 2)
-        {
-            if (saveScript.Line != 0)
-            {
-                for (int i = 0; i < saveScript.Line/*이 앞에 숫자가 몇번 생성 되는지 보는거임*/; i++)
-                {
-                    // 오브젝트 복제
-                    GameObject clonedImage = Instantiate(originalImage);
+        // originalImage = GameObject.Find("base");
+        // GameObject content = GameObject.Find("Content");
+        // int n = 0;
+        // while (n < 2)
+        // {
+        //     if (saveScript.Line != 0)
+        //     {
+        //         for (int i = 0; i < saveScript.Line/*이 앞에 숫자가 몇번 생성 되는지 보는거임*/; i++)
+        //         {
+        //             // 오브젝트 복제
+        //             GameObject clonedImage = Instantiate(originalImage);
 
-                    // 복제된 오브젝트 이름 설정
-                    clonedImage.name = (cloneIndex + 1).ToString();
-                    cloneIndex++;
+        //             // 복제된 오브젝트 이름 설정
+        //             clonedImage.name = (cloneIndex + 1).ToString();
+        //             cloneIndex++;
 
-                    // 복제된 이미지를 Content의 자식으로 만듭니다.
-                    clonedImage.transform.SetParent(content.transform, false);
+        //             // 복제된 이미지를 Content의 자식으로 만듭니다.
+        //             clonedImage.transform.SetParent(content.transform, false);
 
-                    // 원래 오브젝트 다음에 배치
-                    clonedImage.transform.SetSiblingIndex(originalImage.transform.GetSiblingIndex() + 1);
-                }
-            }
-        }
+        //             // 원래 오브젝트 다음에 배치
+        //             clonedImage.transform.SetSiblingIndex(originalImage.transform.GetSiblingIndex() + 1);
+        //         }
+        //     }
+        // }
             
                
     }
