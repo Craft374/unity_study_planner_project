@@ -1,0 +1,5 @@
+https://platform.openai.com/playground/assistants?assistant=asst_KfWItekRtUmIs7fAm7F0ujn9&thread=thread_N8VnLXnjuOjimAXnmpJe6InW
+
+https://platform.openai.com/playground/assistants?assistant=asst_KfWItekRtUmIs7fAm7F0ujn9&thread=thread_Dfs0xFTtuKLos23N9xvp1Gaf
+
+https://platform.openai.com/playground/assistants?assistant=asst_KfWItekRtUmIs7fAm7F0ujn9&thread=thread_8suk4Wr8y0UasWx131YM1zVk

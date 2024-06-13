@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
-using System.IO;
 
 public class save : MonoBehaviour
 {
@@ -46,10 +46,8 @@ public class save : MonoBehaviour
     {
         try
         {
-            // 파일이 이미 존재하는지 확인
             if (!File.Exists(path))
             {
-                // 파일이 없으면 새로운 파일을 생성
                 using (StreamWriter writer = File.CreateText(path))
                 {
                     // 초기 내용은 빈 파일로 생성
@@ -58,7 +56,6 @@ public class save : MonoBehaviour
             }
             else
             {
-                // 파일이 존재하면 내용을 읽어와서 줄 수와 내용을 출력
                 string[] lines = File.ReadAllLines(path);
                 Line = lines.Length;
                 Debug.Log(path + " 파일이 이미 존재합니다. 줄 수: " + Line);
@@ -87,38 +84,41 @@ public class save : MonoBehaviour
     public void LB_click()
     {
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-        saveText(2, "LB");
-        maketxt(); // Update the line count after saving
+        saveText(21, "LB");
+        maketxt(); 
     }
 
     public void RB_click()
     {
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-        saveText(1, "RB");
-        maketxt(); // Update the line count after saving
+        saveText(561, "RB");
+        maketxt(); 
     }
 
     public void saveText(int lineNumber, string text)
     {
-        if (!File.Exists(path))
+        List<string> lines = new List<string>();
+
+        if (File.Exists(path))
         {
-            Debug.LogError("File does not exist.");
-            return;
+            lines = new List<string>(File.ReadAllLines(path));
         }
 
-        List<string> lines = new List<string>(File.ReadAllLines(path));
-
-        if (lineNumber < 1 || lineNumber > lines.Count)
+        if (lineNumber < 1)
         {
             Debug.LogError("Line number is out of range.");
             return;
         }
 
-        lines[lineNumber - 1] = text; // 입력받은 줄 번호에 텍스트를 대입 (-1을 해서 0 인덱싱 처리)
+        while (lines.Count < lineNumber)
+        {
+            lines.Add(string.Empty);
+        }
+
+        lines[lineNumber - 1] = text;
 
         File.WriteAllLines(path, lines.ToArray());
 
-        Debug.Log("Line updated successfully.");
+        Debug.Log($"Line {lineNumber} updated successfully with text: {text}");
     }
-
 }
