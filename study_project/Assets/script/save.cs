@@ -16,6 +16,7 @@ public class save : MonoBehaviour
     private GameObject nameObj;
     private GameObject memoObj;
     public int Line = 0;
+    public buttontest btest;
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class save : MonoBehaviour
         memo = memoObj.name.ToString();
 
         mainScript = GetComponent<main>();
+        btest = GetComponent<buttontest>();
 
         fullPath = Application.dataPath + "/StreamingAssets";
         GameObject leftbutton_obj = GameObject.Find("LB");
@@ -59,6 +61,8 @@ public class save : MonoBehaviour
                 string[] lines = File.ReadAllLines(path);
                 Line = lines.Length;
                 Debug.Log(path + " 파일이 이미 존재합니다. 줄 수: " + Line);
+                btest.arise(Line);
+                btest.cloneIndex = 0;
             }
         }
         catch (System.Exception ex)
@@ -71,12 +75,12 @@ public class save : MonoBehaviour
     {
         if (p_name != nameObj.name.ToString())
         {
-            Debug.Log($"숫자 바뀜 {nameObj.name}");
+            //Debug.Log($"숫자 바뀜 {nameObj.name}");
             nameObj.name = p_name.ToString();
         }
         if (memo != memoObj.name.ToString())
         {
-            Debug.Log($"문자 바뀜 {memoObj.name}");
+            //Debug.Log($"문자 바뀜 {memoObj.name}");
             memoObj.name = memo.ToString();
         }
     }
@@ -84,14 +88,14 @@ public class save : MonoBehaviour
     public void LB_click()
     {
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-        saveText(21, "LB");
+        //saveText(21, "LB");
         maketxt(); 
     }
 
     public void RB_click()
     {
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
-        saveText(561, "RB");
+        //saveText(561, "RB");
         maketxt(); 
     }
 
@@ -119,6 +123,6 @@ public class save : MonoBehaviour
 
         File.WriteAllLines(path, lines.ToArray());
 
-        Debug.Log($"Line {lineNumber} updated successfully with text: {text}");
+        Debug.Log($"{lineNumber}번째 줄이 {text}로 변경되었습니다");
     }
 }

@@ -1415,6 +1415,7 @@ MonoBehaviour:
   p_name: 
   memo: 
   Line: 0
+  btest: {fileID: 0}
 --- !u!114 &519420036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1432,6 +1433,7 @@ MonoBehaviour:
   p_name: 
   memo: 
   qwe: {fileID: 0}
+  saveScript: {fileID: 0}
 --- !u!1 &592285854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2566,7 +2568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1988406382
 RectTransform:
   m_ObjectHideFlags: 0

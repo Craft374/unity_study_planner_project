@@ -20,7 +20,7 @@ public class main : MonoBehaviour
     public Button LB;
     public Button RB;
     public DateTime today;
-
+    public GameObject content;
     void Start()
     {
         GameObject todaytext_obj = GameObject.Find("todaytext");
@@ -31,6 +31,8 @@ public class main : MonoBehaviour
         LB = leftbutton_obj.GetComponent<Button>();
         GameObject rightbutton_obj = GameObject.Find("RB");
         RB = rightbutton_obj.GetComponent<Button>();
+
+        content = GameObject.Find("Content");
 
         today = DateTime.Today;
         date = today.ToString("yyyy-MM-dd");
@@ -63,6 +65,7 @@ public class main : MonoBehaviour
         today = DateTime.Today.AddDays(dayvalue);
         // Debug.Log(today.ToString("yyyy-MM-dd"));
         todayTMP.text = today.ToString("yyyy-MM-dd");
+        Delete();
     }
     public void RB_click()
     {
@@ -79,10 +82,17 @@ public class main : MonoBehaviour
         today = DateTime.Today.AddDays(dayvalue);
         // Debug.Log(today.ToString("yyyy-MM-dd"));
         todayTMP.text = today.ToString("yyyy-MM-dd");
+        Delete();
     }
 
-    void FixedUpdate()
+    public void Delete()
     {
-        
+        foreach (Transform child in content.transform)
+        {
+            if (child.gameObject.name != "addbtn")
+            {
+                Destroy(child.gameObject);
+            }
+        }
     }
 }

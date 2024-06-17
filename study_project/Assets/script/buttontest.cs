@@ -14,14 +14,14 @@ public class buttontest : MonoBehaviour
     public Button btn;
     public save saveScript;
     // 복제된 이미지의 인덱스
-    private int cloneIndex = 0;
+    public int cloneIndex = 0;
     public Button LB;
     public Button RB;
 
     void Start()
     {
         saveScript = GetComponent<save>(); 
-        Debug.Log(saveScript.Line);
+        //Debug.Log(saveScript.Line);
 
         GameObject btnobj = GameObject.Find("addbtn");
         btn = btnobj.GetComponent<Button>();
@@ -59,7 +59,27 @@ public class buttontest : MonoBehaviour
             clonedImage.transform.SetSiblingIndex(originalImage.transform.GetSiblingIndex() + 1);
         }
     }
+    public void arise(int numberOfClones)
+    {
+        originalImage = GameObject.Find("base");
+        GameObject content = GameObject.Find("Content");
 
+        for (int i = 0; i < numberOfClones; i++)
+        {
+            // 오브젝트 복제
+            GameObject clonedImage = Instantiate(originalImage);
+
+            // 복제된 오브젝트 이름 설정
+            clonedImage.name = (cloneIndex + 1).ToString();
+            cloneIndex++;
+
+            // 복제된 이미지를 Content의 자식으로 만듭니다.
+            clonedImage.transform.SetParent(content.transform, false);
+
+            // 원래 오브젝트 다음에 배치
+            clonedImage.transform.SetSiblingIndex(originalImage.transform.GetSiblingIndex() + 1);
+        }
+    }
     public void LB_click()
     {
         // originalImage = GameObject.Find("base");
