@@ -31,7 +31,8 @@ public class save : MonoBehaviour
         mainScript = GetComponent<main>();
         btest = GetComponent<buttontest>();
 
-        fullPath = Application.dataPath + "/StreamingAssets";
+        // fullPath = Application.dataPath + "/StreamingAssets";
+        fullPath = Application.persistentDataPath;
         GameObject leftbutton_obj = GameObject.Find("LB");
         LB = leftbutton_obj.GetComponent<Button>();
         GameObject rightbutton_obj = GameObject.Find("RB");
@@ -103,7 +104,7 @@ public class save : MonoBehaviour
         maketxt(); 
     }
 
-    public void saveText(int lineNumber, string text)
+    public void saveText(int lineNumber, string text, bool Yesno, bool onoff)
     {
         List<string> lines = new List<string>();
 
@@ -123,10 +124,11 @@ public class save : MonoBehaviour
             lines.Add(string.Empty);
         }
 
-        lines[lineNumber - 1] = text;
+        string prefix = $"{(Yesno ? 1 : 0)} {(onoff ? 1 : 0)} ";
+        lines[lineNumber - 1] = prefix + text;
 
         File.WriteAllLines(path, lines.ToArray());
 
-        Debug.Log($"{lineNumber}번째 줄이 {text}로 변경되었습니다");
+        Debug.Log($"{lineNumber}번째 줄이 {lines[lineNumber - 1]}로 변경되었습니다");
     }
 }

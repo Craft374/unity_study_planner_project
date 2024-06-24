@@ -7,9 +7,11 @@ using System.IO;
 using UnityEngine.Events;
 using UnityEngine.Android;
 using TMPro;
+using UnityEngine.EventSystems; 
+using System.Linq;
 
 
-public class onoff : MonoBehaviour
+public class onoff : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Button btn;
     public TMP_InputField inputField;
@@ -23,10 +25,26 @@ public class onoff : MonoBehaviour
     public string fullPath; 
     public string path;
 
+    private bool isPressed = false;
+    private float pressStartTime;
+    private float longPressDuration = 0.5f;
+    private Coroutine longPressCoroutine;
+
     private List<string> ooo = new List<string>();
+    private bool Yesno; //이거는 나중에 꾹눌러서 삭제했을때 판단 이게 1이면 있는거고 0이면 없애면됨
+    private bool OX; //OX기능 했나 안했나를 판단
+    private int index;
+
     public void Start()
     {
-
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+        {
+            Permission.RequestUserPermission(Permission.ExternalStorageRead);
+        }
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
+        {
+            Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+        }
         GameObject saveobj = GameObject.Find("Main Camera");
         saveScript = saveobj.GetComponent<save>();   
         mainScript = saveobj.GetComponent<main>();
@@ -45,24 +63,41 @@ public class onoff : MonoBehaviour
         {
             btn.onClick.AddListener(OnButtonClicked);
         }
+
         if (inputField != null)
         {
             inputField.onEndEdit.AddListener(OnEndEdit);
         }
-        int parentName = int.Parse(transform.parent.name);
-        //Debug.Log(parentName);
-        fullPath = Application.dataPath + "/StreamingAssets";
+
+        int parentName;
+        if (int.TryParse(transform.parent.name, out parentName))
+        {
+            // 파싱 성공 시 처리
+            // Debug.Log(parentName);
+        }
+        else
+        {
+            // 파싱 실패 시 처리
+            // Debug.LogWarning("Parent name is not a valid integer: " + transform.parent.name);
+            parentName = 0; // 또는 다른 기본값 설정
+        }
+
+        // fullPath = Application.dataPath + "/StreamingAssets";
+        fullPath = Application.persistentDataPath;
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
         LoadDataFromFile();
-        int index = int.Parse(parentName.ToString()) - 1;
+
+        index = int.Parse(parentName.ToString()) - 1;
         if (index >= 0 && index < ooo.Count)
         {
-            inputField.text = ooo[index];
+            // inputField.text = ooo[index];
+            inputField.text = string.Join(" ", ooo[index].Split(' ').Skip(2));
+
         }
         else
         {
             inputField.text = ""; // 또는 기본값 설정
-            Debug.LogWarning($"Index {index} is out of range for ooo list.");
+            // Debug.LogWarning($"Index {index} is out of range for ooo list.");
         }
     }
 
@@ -77,12 +112,19 @@ public class onoff : MonoBehaviour
             {
                 ooo.Add(line);
             }
+
+            if (index >= 0 && index < ooo.Count)
+            {
+                string[] parts = ooo[index].Split(' ');
+
+                if (parts.Length > 2)
+                {
+                    Yesno = parts[0] == "1";
+                    OX = parts[1] == "1";
+                    Debug.Log($"활성화 여부: {Yesno}, OX여부: {OX}");
+                }
+            }
         }
-        else
-        {
-            Debug.LogWarning("File not found: " + path);
-        }
-            PrintList();
     }
 
     void InsertTextAt(int index, string text)
@@ -101,7 +143,7 @@ public class onoff : MonoBehaviour
 
         // 인덱스에 텍스트 삽입
         ooo[index] = text;
-        Debug.Log($"{ooo[index]}");
+        // Debug.Log($"{ooo[index]}");
     }
 
     void PrintList()
@@ -130,16 +172,15 @@ public class onoff : MonoBehaviour
             Debug.Log("입력 안함ㅋ");
             p_name = transform.parent.name.ToString();
             memo = value.ToString();
-            Debug.Log(p_name + " " + memo);
+            // Debug.Log(p_name + " " + memo);
             
             InsertTextAt(1, memo);
-            Debug.Log($"{ooo[1]}");
             nameObj.name = p_name;
             memoObj.name = memo;
             // qwe.text = "asd";
             if (saveScript != null)
             {
-                saveScript.saveText(int.Parse(p_name), memo);
+                saveScript.saveText(int.Parse(p_name), memo, true, true);
             }
             else
             {
@@ -151,9 +192,41 @@ public class onoff : MonoBehaviour
 
     public void OnButtonClicked()
     {
-        Debug.Log("입력중ㅋ");
-        inputField.ActivateInputField();
-        //inputField.text = ooo[1]; //인풋필드 내용 변경
+        if (Time.time - pressStartTime <= longPressDuration)
+        {
+            Debug.Log("입력중");
+            inputField.ActivateInputField();
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        isPressed = true;
+        pressStartTime = Time.time;
+        longPressCoroutine = StartCoroutine(CheckLongPress());
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        isPressed = false;
+        if (longPressCoroutine != null)
+        {
+            StopCoroutine(longPressCoroutine);
+        }
+    }
+
+    private IEnumerator CheckLongPress()
+    {
+        while (isPressed)
+        {
+            if (Time.time - pressStartTime > longPressDuration)
+            {
+                Debug.Log("꾹 누르고 있습니다.");
+                Destroy(transform.parent.gameObject);
+                yield break;
+            }
+            yield return null;
+        }
     }
 }
 

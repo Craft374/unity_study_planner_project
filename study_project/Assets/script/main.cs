@@ -23,6 +23,18 @@ public class main : MonoBehaviour
     public GameObject content;
     void Start()
     {
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageRead))
+        {
+            Permission.RequestUserPermission(Permission.ExternalStorageRead);
+        }
+
+        // 파일 쓰기 권한 요청
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
+        {
+            Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+        }
+
+
         GameObject todaytext_obj = GameObject.Find("todaytext");
         todayTMP = todaytext_obj.GetComponent<TMP_Text>();
         GameObject yoil_obj = GameObject.Find("yoil_t");
