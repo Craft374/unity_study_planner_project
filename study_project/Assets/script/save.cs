@@ -62,7 +62,7 @@ public class save : MonoBehaviour
                 Line = lines.Length;
                 Debug.Log(path + " 파일이 이미 존재합니다. 줄 수: " + Line);
                 btest.arise(Line);
-                btest.cloneIndex = 0;
+                //btest.cloneIndex = 0;
             }
         }
         catch (System.Exception ex)
@@ -87,6 +87,8 @@ public class save : MonoBehaviour
 
     public void LB_click()
     {
+        btest.cloneIndex = 0;
+
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
         //saveText(21, "LB");
         maketxt(); 
@@ -94,6 +96,8 @@ public class save : MonoBehaviour
 
     public void RB_click()
     {
+        btest.cloneIndex = 0;
+
         path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
         //saveText(561, "RB");
         maketxt(); 

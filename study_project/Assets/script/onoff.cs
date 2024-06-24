@@ -19,7 +19,9 @@ public class onoff : MonoBehaviour
     private GameObject memoObj;
     public TMP_Text qwe;
     public save saveScript;
-
+    public main mainScript;
+    public string fullPath; 
+    public string path;
 
     private List<string> ooo = new List<string>();
     public void Start()
@@ -27,7 +29,7 @@ public class onoff : MonoBehaviour
 
         GameObject saveobj = GameObject.Find("Main Camera");
         saveScript = saveobj.GetComponent<save>();   
-
+        mainScript = saveobj.GetComponent<main>();
 
         p_name = "";
         memo = "";
@@ -47,19 +49,42 @@ public class onoff : MonoBehaviour
         {
             inputField.onEndEdit.AddListener(OnEndEdit);
         }
-        string parentName = transform.parent.name;
-        Debug.Log(parentName);
-
-        ooo.Add("First");
-        ooo.Add("Second");
-        ooo.Add("Third");
-
-        // 리스트의 특정 인덱스에 값을 넣는 함수 호출
-        InsertTextAt(1, "NewText");
-        
-        // 리스트 출력
-        PrintList();
+        int parentName = int.Parse(transform.parent.name);
+        //Debug.Log(parentName);
+        fullPath = Application.dataPath + "/StreamingAssets";
+        path = fullPath + "/" + mainScript.today.ToString("yyyy-MM-dd") + ".txt";
+        LoadDataFromFile();
+        int index = int.Parse(parentName.ToString()) - 1;
+        if (index >= 0 && index < ooo.Count)
+        {
+            inputField.text = ooo[index];
+        }
+        else
+        {
+            inputField.text = ""; // 또는 기본값 설정
+            Debug.LogWarning($"Index {index} is out of range for ooo list.");
+        }
     }
+
+    private void LoadDataFromFile()
+    {
+        ooo.Clear(); // 기존 리스트 초기화
+
+        if (File.Exists(path))
+        {
+            string[] lines = File.ReadAllLines(path);
+            foreach (string line in lines)
+            {
+                ooo.Add(line);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("File not found: " + path);
+        }
+            PrintList();
+    }
+
     void InsertTextAt(int index, string text)
     {
         if (index < 0)
@@ -76,6 +101,7 @@ public class onoff : MonoBehaviour
 
         // 인덱스에 텍스트 삽입
         ooo[index] = text;
+        Debug.Log($"{ooo[index]}");
     }
 
     void PrintList()
@@ -105,10 +131,12 @@ public class onoff : MonoBehaviour
             p_name = transform.parent.name.ToString();
             memo = value.ToString();
             Debug.Log(p_name + " " + memo);
-
+            
+            InsertTextAt(1, memo);
+            Debug.Log($"{ooo[1]}");
             nameObj.name = p_name;
             memoObj.name = memo;
-            //qwe.text = memo;
+            // qwe.text = "asd";
             if (saveScript != null)
             {
                 saveScript.saveText(int.Parse(p_name), memo);
@@ -125,7 +153,7 @@ public class onoff : MonoBehaviour
     {
         Debug.Log("입력중ㅋ");
         inputField.ActivateInputField();
-        //inputField.text = memoObj.name;
+        //inputField.text = ooo[1]; //인풋필드 내용 변경
     }
 }
 
