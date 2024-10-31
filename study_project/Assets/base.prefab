@@ -297,7 +297,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 11400000, guid: c92898f91ec43a04d9f1b9b3efdc1a4a, type: 2}
+  m_GlobalFontAsset: {fileID: 11400000, guid: e4068082c4d97d34bac3dab308434380, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_RestoreOriginalTextOnEscape: 1
@@ -490,6 +490,14 @@ MonoBehaviour:
   inputField: {fileID: 0}
   p_name: 
   memo: 
+  qwe: {fileID: 0}
+  saveScript: {fileID: 0}
+  mainScript: {fileID: 0}
+  fullPath: 
+  path: 
+  yes: {fileID: 0}
+  no: {fileID: 0}
+  wtf: 0
 --- !u!1 &5916797498583413607
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,8 +565,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c92898f91ec43a04d9f1b9b3efdc1a4a, type: 2}
-  m_sharedMaterial: {fileID: 3859142306082725173, guid: c92898f91ec43a04d9f1b9b3efdc1a4a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e4068082c4d97d34bac3dab308434380, type: 2}
+  m_sharedMaterial: {fileID: 5351559444761800357, guid: e4068082c4d97d34bac3dab308434380, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -692,8 +700,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c92898f91ec43a04d9f1b9b3efdc1a4a, type: 2}
-  m_sharedMaterial: {fileID: 3859142306082725173, guid: c92898f91ec43a04d9f1b9b3efdc1a4a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e4068082c4d97d34bac3dab308434380, type: 2}
+  m_sharedMaterial: {fileID: 5351559444761800357, guid: e4068082c4d97d34bac3dab308434380, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

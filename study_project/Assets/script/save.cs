@@ -42,6 +42,7 @@ public class save : MonoBehaviour
         RB.onClick.AddListener(RB_click);
 
         path = fullPath + "/" + DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+        // Debug.Log(path);
         maketxt();
     }
 
@@ -55,13 +56,13 @@ public class save : MonoBehaviour
                 {
                     // 초기 내용은 빈 파일로 생성
                 }
-                Debug.Log(path + " 파일이 생성되었습니다.");
+                // Debug.Log(path + " 파일이 생성되었습니다.");
             }
             else
             {
                 string[] lines = File.ReadAllLines(path);
                 Line = lines.Length;
-                Debug.Log(path + " 파일이 이미 존재합니다. 줄 수: " + Line);
+                // Debug.Log(path + " 파일이 이미 존재합니다. 줄 수: " + Line);
                 btest.arise(Line);
                 //btest.cloneIndex = 0;
             }
